@@ -1,0 +1,5 @@
+.sonarqube
+bin
+obj
+.vs
+tools
