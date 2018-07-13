@@ -14,7 +14,7 @@ var appName = "TestClassLib";
 
 Task("Restore-Nuget-Packages")
 	.Does(() => {
-		NuGetRestore(project);
+		DotNetCoreRestore(project);
 	});
 
 ////////////////////////////////////////////////////////////////////////////// 
@@ -29,13 +29,15 @@ Task("Sonar")
 Task("SonarBegin") 
   .Does(() => { 
     SonarBegin(new SonarBeginSettings{ 
-      	Key = "Cake.Sonar"
+      	Key = "Cake.Sonar",
+				Silent = true
       }); 
   }); 	
  
 Task("SonarEnd") 
   .Does(() => { 
     SonarEnd(new SonarEndSettings{ 
+							Silent = true
 	}); 
   }); 
 
@@ -46,10 +48,10 @@ Task("SonarEnd")
 Task("Build")
 	.IsDependentOn("Restore-Nuget-Packages")
 	.Does(() => {
-		MSBuild(project,new MSBuildSettings {
-    		Verbosity = Verbosity.Minimal,
-    		Configuration = configuration
-    	});
+		 MSBuild(project,new MSBuildSettings {
+     		Verbosity = Verbosity.Minimal,
+     		Configuration = configuration
+     	});
 	});
 
 Task("AppVeyor")
